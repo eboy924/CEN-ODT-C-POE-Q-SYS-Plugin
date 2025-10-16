@@ -18,11 +18,10 @@ end
 -- The name that will initially display when dragged into a design
 function GetPrettyName(props)
   return PluginInfo.Name .. " " .. PluginInfo.Version
-  -- return "Vaddio" .. props["Model"].Value .. " " .. PluginInfo.Version
 end
 
 -- Optional function used if plugin has multiple pages
-PageNames = {"Setup", "Sensor"} --List the pages within the plugin
+PageNames = {"Setup", "Occupancy Sensor", "Photo Sensor"} --List the pages within the plugin
 function GetPages(props)
   local pages = {}
   --[[ #include "pages.lua" ]]
