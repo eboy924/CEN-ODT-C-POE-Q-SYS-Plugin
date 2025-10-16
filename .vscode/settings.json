@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.json": "jsonc",
+    "*.qplug": "lua"
+  },
+  "editor.tabSize": 2
+}

@@ -1,0 +1,2 @@
+# map .qplug files to Lua for syntax highlighting in GitHub
+*.qplug linguist-language=lua
