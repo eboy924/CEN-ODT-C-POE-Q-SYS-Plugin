@@ -237,3 +237,62 @@ table.insert(ctrls,
   DefaultValue = "High",
   Description = "Ultrasonic Vacant Sensitivity (Low, Medium, High, LowX, Low2X, Low3X)"
 })
+
+-- Photocell
+table.insert(ctrls,
+{
+  Name = "Luminocity",
+  ControlType = "Knob",
+  ControlUnit = "Integer",
+  Min = 0,
+  Max = 65535,
+  DefaultValue = 0,
+  PinStyle = "Output",
+  UserPin = true,
+  Description = "Luminocity Value (16-bit integer)"
+})
+table.insert(ctrls,
+{
+  Name = "MinimumLightChange",
+  ControlType = "Knob",
+  ControlUnit = "Integer",
+  Min = 655,
+  Max = 65535,
+  DefaultValue = 655,
+  PinStyle = "Both",
+  UserPin = true,
+  Description = "The minimum change in the light level that must occur before the sensor will report a new value."
+})
+table.insert(ctrls,
+{
+  Name = "RoomBright",
+  ControlType = "Indicator",
+  IndicatorType = "Led",
+  PinStyle = "Output",
+  UserPin = true,
+  Description = "Room Bright Indicator"
+})
+table.insert(ctrls,
+{
+  Name = "DarkToBrightThreshold",
+  ControlType = "Knob",
+  ControlUnit = "Integer",
+  Min = 0,
+  Max = 65535,
+  DefaultValue = 20000,
+  PinStyle = "Both",
+  UserPin = true,
+  Description = "When the light level value rises above the value set for this property, a dark room will transition to a bright room."
+})
+table.insert(ctrls,
+{
+  Name = "BrightToDarkThreshold",
+  ControlType = "Knob",
+  ControlUnit = "Integer",
+  Min = 0,
+  Max = 65535,
+  DefaultValue = 40000,
+  PinStyle = "Both",
+  UserPin = true,
+  Description = "When the light level value falls below the value set for this property, a bright room will transition to a dark room."
+})

@@ -1,3 +1,5 @@
+DebounceTime = .5
+
 TimeoutDebouce = Timer.New()
 TimeoutDebouce.EventHandler = function()
   TimeoutDebouce:Stop()
@@ -10,9 +12,55 @@ TimeoutDebouce.EventHandler = function()
   })
   SetValue("/Device/OccupancySensor/TimeoutSeconds", encoded , function() print("Set Occupancy Timeout to " .. Controls.OccupancyTimeout.Value) end)
 end
+
+MinimumLightChangeDebounce = Timer.New()
+MinimumLightChangeDebounce.EventHandler = function()
+  MinimumLightChangeDebounce:Stop()
+  local encoded = rapidjson.encode({
+    Device = {
+      PhotoSensor = {
+        LevelReading = {
+          MinLightChange = math.floor(Controls.MinimumLightChange.Value)
+        }
+      }
+    }
+  })
+  SetValue("/Device/PhotoSensor/LevelReading/MinLightChange", encoded , function() print("Set Minimum Light Change to " .. Controls.MinimumLightChange.Value) end)
+end
+
+DarkToBrightThresholdDebounce = Timer.New()
+DarkToBrightThresholdDebounce.EventHandler = function()
+  DarkToBrightThresholdDebounce:Stop()
+  local encoded = rapidjson.encode({
+    Device = {
+      PhotoSensor = {
+        ThresholdDetection = {
+          DarkToBrightThreshold = math.floor(Controls.DarkToBrightThreshold.Value)
+        }
+      }
+    }
+  })
+  SetValue("/Device/PhotoSensor/ThresholdDetection/DarkToBrightThreshold", encoded , function() print("Set Dark to Bright Threshold to " .. Controls.DarkToBrightThreshold.Value) end)
+end
+
+BrightToDarkThresholdDebounce = Timer.New()
+BrightToDarkThresholdDebounce.EventHandler = function()
+  BrightToDarkThresholdDebounce:Stop()
+  local encoded = rapidjson.encode({
+    Device = {
+      PhotoSensor = {
+        ThresholdDetection = {
+          BrightToDarkThreshold = math.floor(Controls.BrightToDarkThreshold.Value)
+        }
+      }
+    }
+  })
+  SetValue("/Device/PhotoSensor/ThresholdDetection/BrightToDarkThreshold", encoded , function() print("Set Bright to Dark Threshold to " .. Controls.BrightToDarkThreshold.Value) end)
+end
+
 Controls.OccupancyTimeout.EventHandler = function()
   TimeoutDebouce:Stop()
-  TimeoutDebouce:Start(1)
+  TimeoutDebouce:Start(DebounceTime)
 end
 
 Controls.LedFlash.EventHandler = function(ctrl)
@@ -148,4 +196,19 @@ Controls.UltrasonicVacantSensitivity.EventHandler = function(ctrl)
     }
   })
   SetValue("/Device/OccupancySensor/Ultrasonic/VacancySensitivity", encoded , function() print("Set Ultrasonic Vacancy Sensitivity to " .. ctrl.String) end)
+end
+
+Controls.MinimumLightChange.EventHandler = function()
+  MinimumLightChangeDebounce:Stop()
+  MinimumLightChangeDebounce:Start(DebounceTime)
+end
+
+Controls.DarkToBrightThreshold.EventHandler = function()
+  DarkToBrightThresholdDebounce:Stop()
+  DarkToBrightThresholdDebounce:Start(DebounceTime)
+end
+
+Controls.BrightToDarkThreshold.EventHandler = function()
+  BrightToDarkThresholdDebounce:Stop()
+  BrightToDarkThresholdDebounce:Start(DebounceTime)
 end

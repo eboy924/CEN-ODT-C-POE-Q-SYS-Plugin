@@ -531,4 +531,127 @@ elseif current_page == "Occupancy Sensor" then
     Margin = 0
   }
 
+elseif current_page == "Photo Sensor" then
+  labelSize[1] = 180
+  TextSize[1] = 100
+    table.insert(
+    graphics,
+    {
+      Type = "Header",
+      Text = "PhotoSensor Level",
+      Position = {x, y},
+      Size = {(labelSize[1] + 4 + TextSize[1]), controlHeight + 4},
+      FontSize = FSize + 2,
+      HTextAlign = "Center"
+    }
+  )
+  y = y + controlHeight + 4 + 4
+  table.insert(
+    graphics,
+    {
+      Type = "Label",
+      Text = "Photosensor Level:",
+      Position = {x, y},
+      Size = labelSize,
+      FontSize = FSize,
+      HTextAlign = "Right"
+    }
+  )
+  layout["Luminocity"] = {
+    PrettyName = "Photo Sensor~Photosensor Level",
+    Style = "Text",
+    Position = {x + labelSize[1] + 4, y},
+    Size = TextSize,
+    Margin = 0,
+    IsReadOnly = true
+  }
+  y = y + controlHeight + 4
+  table.insert(
+    graphics,
+    {
+      Type = "Label",
+      Text = "Minimum Change:",
+      Position = {x, y},
+      Size = labelSize,
+      FontSize = FSize,
+      HTextAlign = "Right"
+    }
+  )
+  layout["MinimumLightChange"] = {
+    PrettyName = "Photo Sensor~Minimum Change",
+    Style = "Text",
+    Position = {x + labelSize[1] + 4, y},
+    Size = TextSize,
+    Margin = 0
+  }
+  y = y + controlHeight + 4
+  table.insert(
+    graphics,
+    {
+      Type = "Header",
+      Text = "Threshold Detection",
+      Position = {x, y},
+      Size = {(labelSize[1] + 4 + TextSize[1]), controlHeight + 4},
+      FontSize = FSize + 2,
+      HTextAlign = "Center"
+    }
+  )
+  y = y + controlHeight + 4 + 4
+  table.insert(
+    graphics,
+    {
+      Type = "Label",
+      Text = "Room Is Bright:",
+      Position = {x, y},
+      Size = labelSize,
+      FontSize = FSize,
+      HTextAlign = "Right"
+    }
+  )
+  layout["RoomBright"] = {
+    PrettyName = "Photo Sensor~Room Is Bright",
+    Style = "Led",
+    Position = {x + labelSize[1] + 4, y},
+    Size = {controlHeight, controlHeight},
+    Margin = 0
+  }
+  y = y + controlHeight + 4
+  table.insert(
+    graphics,
+    {
+      Type = "Label",
+      Text = "Dark to Bright Threshold:",
+      Position = {x, y},
+      Size = labelSize,
+      FontSize = FSize,
+      HTextAlign = "Right"
+    }
+  )
+  layout["DarkToBrightThreshold"] = {
+    PrettyName = "Photo Sensor~Dark to Bright Threshold",
+    Style = "Text",
+    Position = {x + labelSize[1] + 4, y},
+    Size = TextSize,
+    Margin = 0
+  }
+  y = y + controlHeight + 4
+  table.insert(
+    graphics,
+    {
+      Type = "Label",
+      Text = "Bright to Dark Threshold:",
+      Position = {x, y},
+      Size = labelSize,
+      FontSize = FSize,
+      HTextAlign = "Right"
+    }
+  )
+  layout["BrightToDarkThreshold"] = {
+    PrettyName = "Photo Sensor~Bright to Dark Threshold",
+    Style = "Text",
+    Position = {x + labelSize[1] + 4, y},
+    Size = TextSize,
+    Margin = 0
+  }
+
 end

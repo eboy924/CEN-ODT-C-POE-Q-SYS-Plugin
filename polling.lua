@@ -1,6 +1,7 @@
 function Poll()
   GetValues("/Device/OccupancySensor", parseOccupancy)
-  GetValues("/Device/DeviceInfo", parseDeviceInfo)
+  Timer.CallAfter( function() GetValues("/Device/DeviceInfo", parseDeviceInfo) end, .25)
+  Timer.CallAfter( function() GetValues("/Device/PhotoSensor", parsePhotoSensor) end, .5)
 end
 PollTimer.EventHandler = Poll
 
@@ -16,7 +17,7 @@ function parseOccupancy(data)
     if obj.IsGraceOccupancyDetected ~= nil then
       Controls.GraceOccupancy.Boolean = obj.IsGraceOccupancyDetected
     end
-    if obj.TimeoutSeconds ~= nil then
+    if obj.TimeoutSeconds ~= nil and not TimeoutDebouce:IsRunning() then
       Controls.OccupancyTimeout.Value = obj.TimeoutSeconds
     end
     if obj.IsLedFlashEnabled ~= nil then
@@ -92,5 +93,35 @@ function parseDeviceInfo(data)
     end
   else
     print("parseDeviceInfo Error decoding JSON")
+  end
+end
+
+function parsePhotoSensor(data)
+  -- print("parsePhotoSensor", data)
+  local success, obj = pcall(rapidjson.decode, data)
+  if success and obj then
+    -- print(rapidjson.encode(obj, {pretty = true}))
+    obj = obj.Device.PhotoSensor -- unwrap the object
+    if obj.LevelReading ~= nil then
+      if obj.LevelReading.LightValue ~= nil then
+        Controls.Luminocity.Value = obj.LevelReading.LightValue
+      end
+      if obj.LevelReading.MinLightChange ~= nil and not MinimumLightChangeDebounce:IsRunning() then
+        Controls.MinimumLightChange.Value = obj.LevelReading.MinLightChange
+      end
+    end
+    if obj.ThresholdDetection ~= nil then
+      if obj.ThresholdDetection.IsRoomBright ~= nil then
+        Controls.RoomBright.Boolean = obj.ThresholdDetection.IsRoomBright
+      end
+      if obj.ThresholdDetection.DarkToBrightThreshold ~= nil and not DarkToBrightThresholdDebounce:IsRunning() then
+        Controls.DarkToBrightThreshold.Value = obj.ThresholdDetection.DarkToBrightThreshold
+      end
+      if obj.ThresholdDetection.BrightToDarkThreshold ~= nil and not BrightToDarkThresholdDebounce:IsRunning() then
+        Controls.BrightToDarkThreshold.Value = obj.ThresholdDetection.BrightToDarkThreshold
+      end
+    end
+  else
+    print("parsePhotoSensor Error decoding JSON")
   end
 end
